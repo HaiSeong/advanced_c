@@ -2,3 +2,7 @@ pdf
 .pdf
 .dist
 .vscode
+*.out*
+.DS_Store
+
+

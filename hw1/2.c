@@ -45,12 +45,11 @@ void rebooking(int *ar, int n)
 
 	for (p = ar; p < ar + n; p++) // 앞에서 부터 탐색
 	{
-		for (p2 = ar; p2 < p; p2++) // 이전 승객들의 번호 탐색
+		for (p2 = p + 1; p2 < ar + n ; p2++) // 이전 승객들의 번호 탐색
 		{
 			if (*p2 == *p) // 증복되는 경우가 있으먄
 			{
-				*p = changeseat(ar, n); // 가능한 가장 작은 변수 입력
-				break;
+				*p2 = changeseat(ar, n); // 가능한 가장 작은 변수 입력
 			}
 		}
 	}

@@ -7,34 +7,34 @@ void ABC(int *start, int k);
 int main()
 {
 
-	int room1[10], room2[10], all[20];
-	int n = 0, m = 0, cnt;
-	int *temp;
+	int room1[10], room2[10], all[20]; // 배열 선언
+	int n = 0, m = 0, cnt; // 저장할 길이 선언
+	int *temp; 
 
-	temp = room1;
+	temp = room1; // 초기화
 	while (1)
 	{
-		scanf("%d", temp);
+		scanf("%d", temp); // 입력
 		if (*temp == -1)
 			break;
-		*(all + n) = *temp;
+		*(all + n) = *temp; // 복사
 		n++;	
-		temp++;
+		temp++; // 인덱스 증가
 	}
 
-	temp = room2;
+	temp = room2; // 초기화
 	while (1)
 	{
-		scanf("%d", temp);
+		scanf("%d", temp); // 입력
 		if (*temp == -1)
 			break;
-		*(all + n + m) = *temp;
+		*(all + n + m) = *temp; // 복사
 		m++;	
-		temp++;
+		temp++; // 인덱스 증가
 	}
 	
 	cnt = n + m;
-	for (temp = all; temp < all + n + m; temp++)
+	for (temp = all; temp < all + n + m; temp++) // 
 	{
 		ABC(temp, cnt);
 		cnt--;

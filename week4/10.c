@@ -8,10 +8,10 @@ int main()
 	int len, n, i, flag = 1, min = 101;
 
 	scanf("%d", &n);
+	getchar();
 	
 	for (i = 0; i < n; i++)
 	{
-		getchar();
 		gets(str);
 		if (min > strlen(str))
 		{

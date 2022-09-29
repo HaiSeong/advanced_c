@@ -5,11 +5,12 @@ int del(char *str);
 
 int main()
 {
-	char str[11];
+	char str[10];
 
 	scanf("%s", str);
-	del(str);
-	printf("%s\n", str);
+	int len = del(str);
+	for (char *p = str; p < str + len; p++)
+		printf("%c", *p);
 	
 }
 
@@ -37,8 +38,8 @@ int del(char *str)
 					for (p3 = p2; *(p3) != 0; p3++)
 					{
 						*p3 = *(p3 + 1);
-						length--;
 					}
+					length--;
 					flag = 0;
 					*p3 = '\0';
 					break;

@@ -39,7 +39,7 @@ int main()
         else if (p->avg >= 70)
             printf(" C");
         else
-            printf(" F");
+            printf(" D");
 
         printf("\n");
 	}

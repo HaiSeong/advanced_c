@@ -1,128 +1,103 @@
 
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
 typedef struct student
 {
-	char name[10]; // 이름
-	int kor;
-	int eng;
-	int math;
-	double avg;
+	char name[21]; // 이름
+	int kor; // 국어
+	int eng; // 영어
+	int math; // 수학
+	double avg; // 평균
 }student;
 
-struct average
-{
-	double kor;
-	double eng;
-	double math;
-};
-
-struct average calculate_avg(struct student *st, int N);
-double read_data(struct student *st, int N);
-double sort_score(struct student *st, int N);
+void read_data(struct student *st, int N); // 원형 선언
+void sort_score(struct student *st, int N); // 원형 선언
+student *select_out(student *st1, student *st2, int N); // 원형 선언
 
 int main()
 {
-	student s[49]; // 길이 50의 구조체 배열
-	struct average avg;
+	student st1[49]; // 길이 49의 구조체 배열
+	student st2[49]; // 길이 49의 구조체 배열
 	int N;
-	int kcnt=0, ecnt=0, mcnt=0;
 
-	scanf("%d", &N);
+	scanf("%d", &N); // N입력
 
+	read_data(st1, N); // st1에 입력하기
+	read_data(st2, N); // st2에 입력하기
 
-	avg = calculate_avg(s, N);
+	sort_score(st1, N); // 정렬하기
+	sort_score(st2, N); // 정렬하기
 
-	for (student *p = s; p < s + N; p++)
+	student *select = select_out(st1, st2, N); // 중앙값이 더 큰것
+
+	for(student *p = select; p < select + N; p++) // 하나씩 출력
 	{
-		if (p->kor < avg.kor)
-			kcnt++;
-		if (p->eng < avg.eng)
-			ecnt++;
-		if (p->math < avg.math)
-			mcnt++;
+		printf("%s %d %d %d %.1f\n", p->name, p->kor, p->eng, p->math, p->avg); // 출력
 	}
-
-	printf("%.1lf %.1lf %.1lf\n", avg.kor, avg.eng, avg.math);
-	printf("%d %d %d\n", kcnt, ecnt, mcnt);
+	return 0;
 }
 
-
-struct average calculate_avg(struct student *st, int N)
+void read_data(struct student *st, int N)
 {
-	struct average avg;
-	double k=0, e=0, m=0;
-
-	for (struct student *p = st; p < st + N; p++)
-	{
-		k += p->kor;
-		e += p->eng;
-		m += p->math;
-	}
-	avg.kor = k / (double)N;
-	avg.eng = e / (double)N;
-	avg.math = m / (double)N;
-
-	return avg;
-}
-
-double read_data(struct student *st, int N)
-{
-	for (student *p = st; p < st + N; p++)
+	for (student *p = st; p < st + N; p++) // 하나씩 탐색
 	{
 		scanf("%s", p->name); // 입력
 		scanf("%d", &(p->kor)); // 입력
 		scanf("%d", &(p->eng)); // 입력
 		scanf("%d", &(p->math)); // 입력
+		p->avg = (p->kor + p->eng + p->math)/3.0; // 평균계산
 	}
 }
 
-double sort_score(struct student *st, int N)
+void sort_score(struct student *st, int N)
 {
 	// 영어 점수순으로 우선 정렬
-	for (student *p = st; p < st + N - 1; p++)
+	for (student *p = st; p < st + N - 1; p++) // 가장 큰  인덱스를 찾아서 앞으로 옮긴다.
 	{
-		student *max = p;
-		student *p2;
-		for (p2 = p + 1; p2 < st + N; p2++)
+		student *max = p; // 맨 처음 값으로 초기화
+		for (student *p2 = p + 1; p2 < st + N; p2++) // 하나 뒤의 원소부터 검사
 		{
-			if (max->eng < p2->eng)
+			if (max->eng < p2->eng) // max보다 크면 바꾸기
 				max = p2;
 		}
-		max = p;
-		p = p2;
-		p2 = max;
+		student temp = *p; // swap
+		*p = *max; // swap
+		*max = temp; // swap
 	}
 
 	// 국어 점수순으로 정렬
-	for (student *p = st; p < st + N - 1; p++)
+	for (student *p = st; p < st + N - 1; p++) // 가장 큰  인덱스를 찾아서 앞으로 옮긴다.
 	{
-		student *max = p;
-		student *p2;
-		for (p2 = p + 1; p2 < st + N; p2++)
+		student *max = p; // 맨 처음 값으로 초기화
+		for (student *p2 = p + 1; p2 < st + N; p2++) // 하나 뒤의 원소부터 검사
 		{
-			if (max->kor < p2->kor)
+			if (max->kor < p2->kor) // max보다 크면 바꾸기
 				max = p2;
 		}
-		max = p;
-		p = p2;
-		p2 = max;
+		student temp = *p; // swap
+		*p = *max; // swap
+		*max = temp; // swap
 	}
 
 	// 평균점수 순으로 정렬
-	for (student *p = st; p < st + N - 1; p++)
+	for (student *p = st; p < st + N - 1; p++) // 가장 큰  인덱스를 찾아서 앞으로 옮긴다.
 	{
-		student *max = p;
-		student *p2;
-		for (p2 = p + 1; p2 < st + N; p2++)
+		student *max = p; // 맨 처음 값으로 초기화
+		
+		for (student *p2 = p + 1; p2 < st + N; p2++) // 하나 뒤의 원소부터 검사
 		{
-			if (max->avg < p2->avg)
+			if (max->avg < p2->avg) // max보다 크면 바꾸기
 				max = p2;
 		}
-		max = p;
-		p = p2;
-		p2 = max;
+		student temp = *p; // swap
+		*p = *max; // swap
+		*max = temp; // swap
 	}
+}
+
+student *select_out(student *st1, student *st2, int N)
+{
+	if ((st1[N/2]).avg >= (st2[N/2]).avg) // 1의 중앙값이 더 크면
+		return st1; // 1리턴
+	else // 2가 더 크면
+		return st2; // 2리턴
 }

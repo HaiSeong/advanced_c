@@ -50,35 +50,7 @@ void read_data(struct student *st, int N)
 
 void sort_score(struct student *st, int N)
 {
-	// 영어 점수순으로 우선 정렬
-	for (student *p = st; p < st + N - 1; p++) // 가장 큰  인덱스를 찾아서 앞으로 옮긴다.
-	{
-		student *max = p; // 맨 처음 값으로 초기화
-		for (student *p2 = p + 1; p2 < st + N; p2++) // 하나 뒤의 원소부터 검사
-		{
-			if (max->eng < p2->eng) // max보다 크면 바꾸기
-				max = p2;
-		}
-		student temp = *p; // swap
-		*p = *max; // swap
-		*max = temp; // swap
-	}
-
-	// 국어 점수순으로 정렬
-	for (student *p = st; p < st + N - 1; p++) // 가장 큰  인덱스를 찾아서 앞으로 옮긴다.
-	{
-		student *max = p; // 맨 처음 값으로 초기화
-		for (student *p2 = p + 1; p2 < st + N; p2++) // 하나 뒤의 원소부터 검사
-		{
-			if (max->kor < p2->kor) // max보다 크면 바꾸기
-				max = p2;
-		}
-		student temp = *p; // swap
-		*p = *max; // swap
-		*max = temp; // swap
-	}
-
-	// 평균점수 순으로 정렬
+	// 평균점수 순으로 정렬 -> 같으면 한국어 점수 -> 같으면 영어점수
 	for (student *p = st; p < st + N - 1; p++) // 가장 큰  인덱스를 찾아서 앞으로 옮긴다.
 	{
 		student *max = p; // 맨 처음 값으로 초기화
@@ -86,6 +58,10 @@ void sort_score(struct student *st, int N)
 		for (student *p2 = p + 1; p2 < st + N; p2++) // 하나 뒤의 원소부터 검사
 		{
 			if (max->avg < p2->avg) // max보다 크면 바꾸기
+				max = p2;
+			else if (max->avg == p2->avg && max->kor < p2->kor) // max보다 크면 바꾸기
+				max = p2;
+			else if (max->avg == p2->avg && max->kor == p2->kor && max->eng < p2->eng) // max보다 크면 바꾸기
 				max = p2;
 		}
 		student temp = *p; // swap
